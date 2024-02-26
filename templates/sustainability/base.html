@@ -1,41 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href=" {% static 'css/style.css' %}">
     <title>{% block title %}{% endblock %}</title>
 
-<style>
-    .navbar {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background-color: #a1dc8b;
-            min-height: 50px;
-        }
-
-        .navbar ul li {
-            display: inline-block;
-            margin-right: 10px;
-        }
-
-        .navbar li a {
-            color: white;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-        }
-
-        .navbar li a:hover {
-            background-color: #6ea156; 
-        }
-
-        .logout {
-            float: right;
-        }
-
-
-</style>
 </head>
 <body>
 <header>
@@ -47,18 +17,17 @@
                         {% csrf_token %}
                         <button type="submit">Logout</button>
                     </form>
-                    </div>
+
                     <a href="{% url 'home' %}">Home</a>
                     <a href="{% url 'user' %}">User</a>
                     <a href="{% url 'leaderboard' %}">Leaderboard</a>
+                 {% if perms.sustainability.ADD_PLANT_OF_THE_DAY %}
+                    <a href="{% url 'plant_of_the_day_view' %}">Edit Plant of the day</a>
+                        {% endif %}
                     <a href="{% url 'upload-plant-image' %}">Identify Plant</a>
+                  
                 </li>
-                <li>
-                    {% if perms.sustainability.ADD_PLANT_OF_THE_DAY %}
-                        <a href="{% url 'plant_of_the_day_view' %}">Edit Plant of the day</a>
-                    {% endif %}
-                </li>
-
+               
             {% else %}
                 <li>
                     <a href="{% url 'login' %}">Login</a>

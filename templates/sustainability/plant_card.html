@@ -1,70 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plant Top Trumps Card</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f3f3f3;
-        }
-        .card {
-            width: 300px;
-            height: 400px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            background-color: #fff;
-            overflow: hidden;
-        }
-        .card-header {
-            background-color: #007bff;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-            font-weight: bold;
-        }
-        .card-body {
-            padding: 20px;
-        }
-        .attribute {
-            margin-bottom: 10px;
-        }
-        .attribute span {
-            font-weight: bold;
-        }
-        .plant-photo {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            margin-bottom: 10px;
-        }
-    </style>
-</head>
-<body>
+{% load static %}
 
-<div class="card">
+
+<div class="card" style="background-color: {{card.rarity_id.rarity_colour}}">
     <div class="card-header">
-        Plant Top Trumps
+        {{ card.plant_id.name }}
     </div>
-    <div class="card-body">
-        <img src="{% static 'images/plant_default.jpg' %}" alt="Plant Photo" class="plant-photo">
+   <div class="card-body">
+        <img src="{{ card.plant_id.plant_photo.url }}" alt="Plant Photo" class="plant-photo">
+       
         <div class="attribute">
-            <span>Name:</span> {{ plant.name }}
+            <span>Description:</span> {{ card.plant_id.description }}
         </div>
-        <div class="attribute">
-            <span>Description:</span> {{ plant.description }}
-        </div>
-        <!-- Add more attributes if needed -->
+       
     </div>
 </div>
 
-</body>
-</html>
+

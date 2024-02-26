@@ -10,6 +10,6 @@ content_type = ContentType.objects.get_for_model(PlantOfTheDay)
 if not plant_of_the_day_permission:
     plant_of_the_day_permission = Permission.objects.create(
         codename=ADD_PLANT_OF_THE_DAY,
-        name='Can add plant of the day',
+        name='Can access plant of the day panel',
         content_type=content_type
     )

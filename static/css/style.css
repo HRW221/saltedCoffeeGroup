@@ -1,0 +1,69 @@
+
+.navbar {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #a1dc8b;
+    min-height: 50px;
+}
+
+.navbar ul li {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.navbar li a {
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navbar li a:hover {
+    background-color: #6ea156; 
+}
+
+.logout {
+    float: right;
+}
+
+.card{
+    width: 300px;
+    height: 400px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    overflow: hidden;
+    margin: 10px auto;
+}
+
+.card-header {
+
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.attribute {
+    margin-bottom: 10px;
+}
+
+.attribute span {
+    font-weight: bold;
+}
+
+.plant-photo {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+

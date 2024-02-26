@@ -3,7 +3,7 @@
 {% block content %}
     {% load static %}
 <body>
- <h3>Current Plant of the Day: {{ current_plant }}</h3>
-<img src="{{   current_plant.plant.plant_photo.url  }}" alt="plant_photo" >
+ <h3>Current Plant of the Day: {{ current_plant.plant_id }}</h3>
+ {% include 'sustainability/plant_card.html' with card=current_plant %}
 </body>
 {% endblock %}

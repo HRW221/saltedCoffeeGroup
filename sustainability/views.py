@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth import get_user
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
@@ -9,6 +10,8 @@ from django.contrib.auth.decorators import login_required
 import requests
 
 from sustainability.forms import PlantOfTheDayForm
+from sustainability.models import PlantOfTheDay, Plant, Card
+from django.contrib.auth.models import User
 from sustainability.forms import ImageUploadForm
 from sustainability.models import PlantOfTheDay
 from sustainability.permissions import ADD_PLANT_OF_THE_DAY
@@ -16,10 +19,11 @@ from sustainability.permissions import ADD_PLANT_OF_THE_DAY
 @login_required()
 def home(request):
     try:
-        current_plant = PlantOfTheDay.objects.get(date=timezone.now().date())
+        current_plant = PlantOfTheDay.objects.get(date=timezone.now().date()).plant
     except PlantOfTheDay.DoesNotExist:
         current_plant = None
     return render(request, 'sustainability/index.html', {'current_plant': current_plant})
+
 
 @login_required()
 @permission_required('sustainability.add_plant_of_the_day', raise_exception=True)
@@ -35,7 +39,7 @@ def plant_of_the_day_view(request):
     else:
         form = PlantOfTheDayForm()
         try:
-            current_plant = PlantOfTheDay.objects.get(date=timezone.now().date())
+            current_plant = PlantOfTheDay.objects.get(date=timezone.now().date()).plant
         except PlantOfTheDay.DoesNotExist:
             current_plant = "Not selected"
     return render(request, 'sustainability/add_plant_of_the_day.html', {'form': form, 'current_plant': current_plant})
@@ -50,7 +54,13 @@ def leaderboard_view(request):
 
 @login_required()
 def users_cards_view(request):
-    return render(request, 'sustainability/cards.html')
+    cards = Card.objects.all()
+    return render(request, 'sustainability/cards.html', context={'cards': cards})
+
+@login_required()
+def user_account_view(request):
+    user = get_user(request)
+    return render(request, 'sustainability/account.html', context={'user':user})
 
 @login_required
 def identify_plant_view(request):
