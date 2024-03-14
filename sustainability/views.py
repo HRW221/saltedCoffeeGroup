@@ -25,7 +25,7 @@ def home(request):
     except PlantOfTheDay.DoesNotExist:
         current_plant = None
         # Render the index page
-    return render(request, 'sustainability/index.html', {'current_plant': current_plant})
+    return render(request, 'sustainability/home.html', {'current_plant': current_plant})
 
 
 # View to edit the plant of the day - only for gamemasters with the permission

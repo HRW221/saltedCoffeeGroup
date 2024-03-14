@@ -1,28 +1,12 @@
 <!--Account page-->
 
-{% extends 'sustainability/base.html' %}
+{% extends 'index.html' %}
 
 {% block title %}
     User Account
 {% endblock %}
 
-
-
 {% block content %}
-<style>
-    .details {
-      width: 300px;
-      height: auto;
-      padding: 20px;
-      border: 2px solid #333;
-      border-radius: 10px;
-      background-color: #f0f0f0;
-      line-height: 1.5;
-      font-family: Arial, sans-serif;
-    }
-    
-
-    </style>
 
 <div class="details">
     Username: {{user.username}}
@@ -31,9 +15,5 @@
     Change Details
 </div>
 
-
-
-
-    
-    
+ 
 {% endblock %}

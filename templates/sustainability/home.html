@@ -1,0 +1,15 @@
+ <!--Homepage-->
+
+{% extends 'index.html' %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+{% load static %}
+<div class="container">
+    <h3>Current Plant of the Day: {{ current_plant.name }}</h3>
+    <!--Show the card that corresponds with the current plant of the day-->
+   {% include 'sustainability/plant_card.html' with card=current_plant %}
+</div>
+
+{% endblock %}

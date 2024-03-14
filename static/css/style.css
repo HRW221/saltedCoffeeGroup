@@ -1,33 +1,136 @@
+/*index.html*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
-.navbar {
-    list-style: none;
+::after,
+::before {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    overflow: hidden;
-    background-color: #c7df98;
-    min-height: 50px;
 }
 
-.navbar ul li {
-    display: inline-block;
-    margin-right: 10px;
-}
-
-.navbar li a {
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
+a {
     text-decoration: none;
 }
 
-.navbar li a:hover {
-    background-color: #6ea156; 
+li {
+    list-style: none;
 }
 
-.logout {
-    float: right;
+h1 {
+    font-weight: 600;
+    font-size: 1.5rem;
 }
 
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+.wrapper {
+    display: flex;
+}
+
+.main {
+    min-height: 100vh;
+    width: 100%;
+    transition: all 0.35s ease-in-out;
+    background-color: #fafbfe;
+}
+
+#sidebar {
+    width: 100px;
+    min-width: 100px;
+    z-index: 1000;
+    transition: all .25s ease-in-out;
+    background-color: #EFFCD7;
+    display: flex;
+    flex-direction: column;
+    height: 100vh; 
+}
+
+#sidebar.expand {
+    width: 260px;
+    min-width: 260px;
+}
+
+.toggle-btn {
+    background-color: transparent;
+    cursor: pointer;
+    border: 0;
+    padding: 1rem 1.5rem;
+}
+
+.toggle-btn i {
+    font-size: 1.5rem;
+    color: #000000;
+}
+
+.sidebar-logo {
+    margin: auto 0;
+    
+}
+
+.sidebar-logo a {
+    color: #010101;
+    font-size: 1.15rem;
+    font-weight: 600;
+
+}
+
+#sidebar:not(.expand) .sidebar-logo,
+#sidebar:not(.expand) a.sidebar-link span {
+    display: none;
+}
+
+.sidebar-nav {
+    padding: 2rem 0;
+    flex: 1 1 auto;
+}
+
+a.sidebar-link {
+    padding: .625rem 1.625rem;
+    color: #000000;
+    display: block;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    border-left: 3px solid transparent;
+}
+
+.sidebar-link i {
+    font-size: 1.1rem;
+    margin-right: .75rem;
+}
+
+a.sidebar-link:hover {
+    background-color: #C7DF98;
+    border-left: 3px solid #376a21;
+}
+
+.sidebar-item {
+    position: relative;
+    width: 100%;
+}
+
+.sidebar-footer {
+    position: fixed;
+    display: inline-block;
+    bottom: 0;
+}
+
+
+/*account.html*/
+.details {
+    width: 300px;
+    height: auto;
+    padding: 20px;
+    border: 2px solid #333;
+    border-radius: 10px;
+    background-color: #f0f0f0;
+    line-height: 1.5;
+    font-family: Arial, sans-serif;
+  }
+
+
+/*plant_card.html*/
 .card{
     width: 300px;
     height: 400px;
@@ -40,7 +143,6 @@
 }
 
 .card-header {
-
     color: #050505;
     padding: 10px;
     text-align: center;
@@ -65,6 +167,8 @@
     object-fit: cover;
     margin-bottom: 10px;
 }
+
+/*plant_card_disabled*/
 .plant-photo-disabled {
     filter: grayscale(100%);
     width: 100%;
@@ -72,5 +176,3 @@
     object-fit: cover;
     margin-bottom: 10px;
 }
-
-

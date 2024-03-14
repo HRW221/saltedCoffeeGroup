@@ -42,8 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'sustainability.apps.SustainabilityConfig',
-    'registration.apps.RegistrationConfig',
+    'sustainability',
+    'registration',
 ]
 
 MIDDLEWARE = [

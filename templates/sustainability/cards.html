@@ -1,21 +1,18 @@
  <!--Shows all the cards in the game-->
 
-{% extends 'sustainability/base.html' %}
+{% extends 'index.html' %}
 
 {% block title %}
     Card collection
 {% endblock %}
 
-
-
 {% block content %}
-
     {% for card in cards %}
          <!--If the user does not own the card, show a greyed out card-->
         {% if card not in user_owned_cards %}
             {% include 'sustainability/plant_card_disabled.html' with card=card %}
         {% else %}
-             <!--If the user owns the card, show a colout version-->
+             <!--If the user owns the card, show a color version-->
             {% include 'sustainability/plant_card.html' with card=card %}
         {% endif %}
     {% endfor %}
