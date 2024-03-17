@@ -83,8 +83,14 @@ WSGI_APPLICATION = 'guardiansOfTheGarden.wsgi.app'
 AUTH_USER_MODEL = 'sustainability.Userprofile'
 
 DATABASES = {
-    'default': env.db("DATABASE_URL"),
-}
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': env("DATABASE_NAME"),
+        'USER': env("DATABASE_USER"),
+        'PASSWORD': env("DATABASE_PASSWORD"),
+        'HOST': env("DATABASE_HOST"),
+        'PORT': env("DATABASE_PORT"),
+    }}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -115,7 +121,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-LOGIN_URL = 'registration/login'
+LOGIN_URL = '/registration/login'
 
 # Whitenoise static stuff
 STATIC_URL = '/static/'
