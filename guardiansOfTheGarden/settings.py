@@ -29,8 +29,9 @@ SECRET_KEY = env('SECRET_KEY')
 CSRF_COOKIE_SECURE = env('PRODUCTION')
 SESSION_COOKIE_SECURE = env('PRODUCTION')
 CSRF_TRUSTED_ORIGINS = [
-    'https://localhost:8000'
-    'https://django-server-production-1cc2.up.railway.app/'
+    'https://localhost:8000',
+    'https://*.railway.app/',
+    'monorail.proxy.rlwy.net',
 ]
 
 # SECURITY WARNING: don't run with debug turned on in production!
