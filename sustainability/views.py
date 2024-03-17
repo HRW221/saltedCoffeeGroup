@@ -157,12 +157,12 @@ def user_account_view(request):
     return render(request, 'sustainability/account.html', context={'user': user})
 
 
-@login_required
+#@login_required
 def identify_plant_view(request):
     return render(request, 'sustainability/identify_plant_form.html')
 
 
-@login_required
+#@login_required
 def upload_plant_view(request):
     # Initialize variables to ensure they are accessible throughout the function
     plant_of_the_day_card = None
@@ -246,7 +246,7 @@ def upload_plant_view(request):
     return render(request, 'sustainability/upload_form.html', {'form': form})
 
 
-@login_required
+#@login_required
 def capture_plant_view(request):
     # Initialize variables to ensure they are accessible throughout the function
     plant_of_the_day_card = None
