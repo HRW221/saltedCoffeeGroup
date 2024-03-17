@@ -1,0 +1,15 @@
+<!--Account page-->
+
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="container">
+  <h2>Change details</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Change details</button>
+  </form>
+</div>
+
+{% endblock %}
