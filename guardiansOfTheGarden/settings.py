@@ -28,6 +28,10 @@ SECRET_KEY = env('SECRET_KEY')
 
 CSRF_COOKIE_SECURE = env('PRODUCTION')
 SESSION_COOKIE_SECURE = env('PRODUCTION')
+CSRF_TRUSTED_ORIGINS = [
+    'https://localhost:8000'
+    'https://django-server-production-1cc2.up.railway.app/'
+]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG')
