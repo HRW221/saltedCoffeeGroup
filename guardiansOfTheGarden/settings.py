@@ -26,6 +26,9 @@ environ.Env.read_env(os.path.join(BASE_DIR, 'variables.env'))
 
 SECRET_KEY = env('SECRET_KEY')
 
+CSRF_COOKIE_SECURE = env('PRODUCTION')
+SESSION_COOKIE_SECURE = env('PRODUCTION')
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG')
 
@@ -83,14 +86,8 @@ WSGI_APPLICATION = 'guardiansOfTheGarden.wsgi.app'
 AUTH_USER_MODEL = 'sustainability.Userprofile'
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env("DATABASE_NAME"),
-        'USER': env("DATABASE_USER"),
-        'PASSWORD': env("DATABASE_PASSWORD"),
-        'HOST': env("DATABASE_HOST"),
-        'PORT': env("DATABASE_PORT"),
-    }}
+    'default': env.db("DATABASE_URL")
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
