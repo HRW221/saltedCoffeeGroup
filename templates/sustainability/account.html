@@ -8,19 +8,26 @@
 
 {% block content %}
 
-<div class="container">
-    <div class="details">
-        Username: {{user.username}}
-        <br>
-        Email: {{user.email}}
-        <br>
-        Score: {{ user.calculate_score }}
+<section id="details" class="min-vh-100 d-flex align-items-center text-center">
+    <div class="container">
+        <div class="row-1">
+            <div class="col-18">
+                <h1 class="text-uppercase fw-semiblold display-1">Your Account Details</h1>
+                <div class="container">
+                    <div class="details">
+                        <p><strong>Username:</strong> {{ user.username }}</p>
+                        <p><strong>Email:</strong> {{ user.email }}</p>
+                        <p><strong>Score:</strong> {{ user.calculate_score }}</p>
+                    </div>
+                </div>
+                <br>
+                <div class="container">
+                    <a href="{% url 'change_details' %}" class="btn btn-light">Change your details</a>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-
-<div class="container">
-    <a href="change_details">Change Details</a>
-</div>
+</section>
 
  
 {% endblock %}

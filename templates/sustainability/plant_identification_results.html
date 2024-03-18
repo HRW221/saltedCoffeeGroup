@@ -3,32 +3,47 @@
 
 {% extends 'index.html' %}
 
-{% block content %}
-  <h2>Plant Identification Result</h2>
-  {% if best_match %}
-    <p><strong>Best Match:</strong> {{ best_match }}</p>
-  {% endif %}
-  {% if result %}
-    <div>
-      <h3>Details</h3>
-      <p><strong>Scientific Name:</strong> {{ result.species.scientificName }}</p>
-      <p><strong>Common Names:</strong> {{ result.species.commonNames|join:", " }}</p>
-      <p><strong>Family:</strong> {{ result.species.family.scientificName }}</p>
-      <p><strong>Score:</strong> {{ result.score }}</p>
-    </div>
-    {% if match_message %}
-      <div>
-        <p><strong>Match Message:</strong> {{ match_message }}</p>
-      </div>
-    {% endif %}
-  {% else %}
-    <p>No results found.</p>
-  {% endif %}
+{% block title %}
+  Plant identifcation API results
+{% endblock %}
 
-  {% if current_plant %}
-    <div style="margin-top: 20px;">
-      <h3>Current Plant of the Day:</h3>
-      {% include 'sustainability/plant_card.html' with card=current_plant %}
-    </div>
-  {% endif %}
+{% block content %}
+
+<section id="results" class="min-vh-100 d-flex align-items-center text-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+          <h1 class="text-uppercase fw-semiblold display-1">Plant Identification Result</h1>
+          <div class="container">
+            {% if best_match %}
+              <p style="font-size: 3rem;"><strong style="font-weight: 500;">Best Match:</strong> {{ best_match }}</p>
+            {% endif %}
+            {% if result %}
+              <div class="details">
+                <p><strong>Scientific Name:</strong> {{ result.species.scientificName }}</p>
+                <p><strong>Common Names:</strong> {{ result.species.commonNames|join:", " }}</p>
+                <p><strong>Family:</strong> {{ result.species.family.scientificName }}</p>
+                <p><strong>Score:</strong> {{ result.score }}</p>
+              </div>
+              {% if match_message %}
+                <div class="details">
+                  <p><strong>Match Message:</strong> {{ match_message }}</p>
+                </div>
+              {% endif %}
+            {% else %}
+              <p>No results found.</p>
+            {% endif %}
+
+            {% if current_plant %}
+              <div style="margin-top: 20px;">
+                <h3>Current Plant of the Day:</h3>
+                {% include 'sustainability/plant_card.html' with card=current_plant %}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>  
+  </div>
+</section>
 {% endblock %}

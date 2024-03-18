@@ -1,18 +1,28 @@
+<!--User chooses how to collect plant-->
+
+<!--THIS PAGE IS NO LONGER USED-->
+
+
 {% extends 'index.html' %}
 
-{% block content %}
-<div id="option_selection">
-  <button id="choose_upload">Upload a Photo</button>
-  <button id="choose_camera">Take a Photo</button>
-</div>
-<script>
-  document.getElementById('choose_upload').addEventListener('click', function() {
-      window.location.href = "{% url 'upload_plant_image' %}";  
-  });
-  
-  document.getElementById('choose_camera').addEventListener('click', function() {
-      window.location.href = "{% url 'capture_plant_image' %}"; 
-  });
-</script>
+{% block title %}
+    Identify Plant
 {% endblock %}
 
+{% block content %}
+
+<section id="identify" class="min-vh-100 d-flex align-items-center text-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="text-uppercase fw-semiblold display-1">Collect a New Plant:</h1>
+        <div class="container">
+          <a href="{% url 'upload_plant_image' %}" class="btn btn-light">Upload Photo</a>
+          <a href="{% url 'capture_plant_image' %}" class="btn btn-light">Take Photo</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

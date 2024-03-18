@@ -18,7 +18,8 @@
         <p>{{ error_message }}</p>
     {% endif %}
 
-    <h2>Login</h2>
+    <div class="container">
+        <h1>Login</h1>
     <form method="post">
         {% csrf_token %}
         <label for="username">Username:</label><br>
@@ -27,4 +28,6 @@
         <input type="password" id="password" name="password"><br><br>
         <input type="submit" value="Login">
     </form>
+    </div>
+    
 {% endblock %}
