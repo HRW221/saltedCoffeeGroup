@@ -3,30 +3,6 @@
 {% block title %}Capture Plant Image{% endblock %}
 
 {% block content %}
-
-<section id="capture" class="min-vh-100 d-flex align-items-center text-center">
-  <div class="container">
-    <div class="row">
-      <div class="col-12">
-        <h1 class="text-uppercase fw-semiblold display-1">Take a Photo</h1>
-        <div id="camera_interface">
-          <button id="enable_camera">Enable Camera</button>
-          <div class="camera" style="display:none;">
-            <video id="video" width="320" height="240" autoplay></video>
-            <button id="capture">Capture Photo</button>
-            <button id="retake" style="display:none;">Retake</button>
-          </div>
-          <canvas id="canvas" width="320" height="240" style="display:none;"></canvas>
-          <form method="post" enctype="multipart/form-data" style="display:none;" id="camera_form">
-            {% csrf_token %}
-            <input type="hidden" name="image_data" id="imageData">
-            <button type="submit" id="submit_button" style="display:none;">Submit</button>
-          </form>
-      </div>
-      </div>
-    </div>
-  </div>
-</section>
 <div id="camera_interface">
     <button id="enable_camera">Enable Camera</button>
     <div class="camera" style="display:none;">
@@ -62,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Error accessing the camera: ', err);
         });
     });
-  
+
     document.getElementById('capture').addEventListener('click', function() {
         var canvas = document.getElementById('canvas');
         var video = document.getElementById('video');
