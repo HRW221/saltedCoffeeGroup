@@ -24,6 +24,14 @@
                 <div class="container">
                     <a href="{% url 'change_details' %}" class="btn btn-light">Change your details</a>
                 </div>
+                <div class="container">
+                    <form method="post">
+                        {% csrf_token %}
+                        <label for="code">Enter the signup code:</label>
+                        <input type="text" id="code" name="code">
+                        <button type="submit" style="btn btn-light">Submit</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
