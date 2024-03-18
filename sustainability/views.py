@@ -224,6 +224,27 @@ def users_cards_view(request):
 @login_required()
 def user_account_view(request):
     # Retrieve the currently logged in user
+
+    if request.method == 'POST':
+        form = BecomeGameMasterForm(request.POST)
+        if form.is_valid():
+            code = form.cleaned_data['code']
+            if code in GameMasterCode.objects.all().values_list('code', flat=True):
+                gamemastercode = GameMasterCode.objects.get(code=code)
+
+                if not gamemastercode.used:
+                    user = request.user
+                    plant_of_the_day_permission, _ = sustainability.permissions.plant_of_the_day_permission
+                    if not user.has_perm(plant_of_the_day_permission.codename):
+                        user.user_permissions.add(plant_of_the_day_permission)
+                        gmcode = GameMasterCode.objects.get(code=code)
+                        gmcode.used = True
+                        gmcode.save()
+                        user.save()
+                        return redirect('home')
+            else:
+                messages.error(request, 'Invalid code.')
+
     user = get_user(request)
     return render(request, 'sustainability/account.html', context={'user': user})
 
