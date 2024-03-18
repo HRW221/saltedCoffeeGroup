@@ -12,8 +12,11 @@ from django.contrib.auth.decorators import login_required
 import requests
 from rest_framework.reverse import reverse
 
-from sustainability.forms import ImageCaptureForm, PlantOfTheDayForm, LeaderboardForm, JoinLeaderboardForm, ChangeDetailsForm
-from sustainability.models import Card, UsersCard, Userprofile, Leaderboard, LeaderboardMember, Pack
+import sustainability.permissions
+import sustainability.permissions
+from sustainability.forms import ImageCaptureForm, PlantOfTheDayForm, LeaderboardForm, JoinLeaderboardForm, \
+    ChangeDetailsForm, BecomeGameMasterForm
+from sustainability.models import Card, UsersCard, Userprofile, Leaderboard, LeaderboardMember, Pack, GameMasterCode
 
 from sustainability.forms import ImageUploadForm
 from sustainability.models import PlantOfTheDay
@@ -29,14 +32,17 @@ def home(request):
         # Render the index page
     return render(request, 'sustainability/home.html', {'current_plant': current_plant})
 
+
 # Exeter view
 def exeter_view(request):
     return render(request, 'sustainability/exeter.html')
 
+
 # View to edit the plant of the day - only for game masters with the permission
 @login_required()
-@permission_required('sustainability.add_plant_of_the_day', raise_exception=True)
 def plant_of_the_day_view(request):
+    if not request.user.user_permissions.filter(codename=sustainability.permissions.ADD_PLANT_OF_THE_DAY):
+        return redirect('home')
     # Get html form post request from the edit plant of the day page.
     if request.method == 'POST':
         form = PlantOfTheDayForm(request.POST)
@@ -70,11 +76,12 @@ def account_view(request):
 def leaderboard_view(request, leaderboard_id):
     user = get_user(request)
     try:
-      leaderboard = Leaderboard.objects.get(leaderboard_id=leaderboard_id)
+        leaderboard = Leaderboard.objects.get(leaderboard_id=leaderboard_id)
 
     except Leaderboard.DoesNotExist:
         return redirect('leaderboard')
-    if not LeaderboardMember.objects.filter(member_id=user, leaderboard_id=leaderboard_id).exists() and not leaderboard.is_public :
+    if not LeaderboardMember.objects.filter(member_id=user,
+                                            leaderboard_id=leaderboard_id).exists() and not leaderboard.is_public:
         return redirect('leaderboard')
 
     member_ids = LeaderboardMember.objects.filter(leaderboard_id=leaderboard_id).values_list('member_id', flat=True)
@@ -83,9 +90,12 @@ def leaderboard_view(request, leaderboard_id):
     user_profiles = leader_user_profiles.order_by('-score')
     user_in_leaderboard = leader_user_profiles.filter(id=request.user.id).exists()
 
-    invite_link = request.build_absolute_uri(reverse('join_leaderboard') + f'?leaderboard_code={leaderboard.leaderboard_code}')
+    invite_link = request.build_absolute_uri(
+        reverse('join_leaderboard') + f'?leaderboard_code={leaderboard.leaderboard_code}')
     # Pass the user profiles to the template
-    return render(request, 'sustainability/leaderboard.html', {'user_profiles': user_profiles, 'leaderboard': leaderboard, 'invite_link': invite_link, 'user_in_leaderboard':user_in_leaderboard})
+    return render(request, 'sustainability/leaderboard.html',
+                  {'user_profiles': user_profiles, 'leaderboard': leaderboard, 'invite_link': invite_link,
+                   'user_in_leaderboard': user_in_leaderboard})
 
 
 @login_required()
@@ -96,6 +106,7 @@ def leaderboard_list_view(request):
 
     return render(request, 'sustainability/leaderboard_list.html',
                   {'leaderboard_list': leaderboard_list, 'public_list': public_list})
+
 
 @login_required()
 def create_leaderboard_view(request):
@@ -110,6 +121,7 @@ def create_leaderboard_view(request):
     else:
         form = LeaderboardForm()
     return render(request, 'sustainability/create_leaderboard.html', {'form': form})
+
 
 @login_required()
 def join_leaderboard(request):
@@ -192,16 +204,16 @@ def users_cards_view(request):
         form = ImageUploadForm()
 
     context = {
-        'packob1' : packs[0],
-        'pack1' : pack_list[0],
-        'packob2' : packs[1],
-        'pack2' : pack_list[1],
-        'packob3' : packs[2],
-        'pack3' : pack_list[2],
-        'packob4' : packs[3],
-        'pack4' : pack_list[3],
-        'packob5' : packs[4],
-        'pack5' : pack_list[4],
+        'packob1': packs[0],
+        'pack1': pack_list[0],
+        'packob2': packs[1],
+        'pack2': pack_list[1],
+        'packob3': packs[2],
+        'pack3': pack_list[2],
+        'packob4': packs[3],
+        'pack4': pack_list[3],
+        'packob5': packs[4],
+        'pack5': pack_list[4],
         'user_owned_cards': user_owned_cards,
         'form': form,
     }
@@ -389,23 +401,28 @@ def capture_plant_view(request):
         form = ImageCaptureForm()
     return render(request, 'sustainability/capture_form.html', {'form': form})
 
+
 def is_within_area(latitude, longitude):
     # returns True if the coordinates are within the desired area
-    uni_lat, uni_lon = 50.7354, -3.5339 #University of Exeter's main coordinates (approximate)
+    uni_lat, uni_lon = 50.7354, -3.5339  # University of Exeter's main coordinates (approximate)
     radius = 0.01  # Approximate "radius" in degrees to consider a location valid
     return abs(float(latitude) - uni_lat) <= radius and abs(float(longitude) - uni_lon) <= radius
+
 
 @login_required()
 def leave_leaderboard(request, leaderboard_id):
 
     if request.user.is_authenticated:
-            leaderboard = get_object_or_404(Leaderboard, leaderboard_id=leaderboard_id)
-            if LeaderboardMember.objects.filter(leaderboard_id=leaderboard, member_id=request.user).exists():
-                # Remove the user from the leaderboard members
-                LeaderboardMember.objects.filter(leaderboard_id=leaderboard, member_id=request.user).delete()
-            return redirect('leaderboard')  # Redirect to the home page or any other appropriate URL after leaving the leaderboard
+        leaderboard = get_object_or_404(Leaderboard, leaderboard_id=leaderboard_id)
+        if LeaderboardMember.objects.filter(leaderboard_id=leaderboard, member_id=request.user).exists():
+            # Remove the user from the leaderboard members
+            LeaderboardMember.objects.filter(leaderboard_id=leaderboard, member_id=request.user).delete()
+        return redirect(
+            'leaderboard')  # Redirect to the home page or any other appropriate URL after leaving the leaderboard
     return None
-#view to allow users to change their details
+
+
+# view to allow users to change their details
 @login_required
 def change_details(request):
     if request.method == 'POST':
@@ -421,3 +438,29 @@ def change_details(request):
         form = ChangeDetailsForm(instance=request.user)
     return render(request, 'sustainability/change_details.html', {'form': form})
 
+
+from django.contrib.auth.models import User
+
+
+@login_required
+def code_enter_view(request):
+    if request.method == 'POST':
+        form = BecomeGameMasterForm(request.POST)
+        if form.is_valid():
+            code = form.cleaned_data['code']
+            if code in GameMasterCode.objects.all().values_list('code', flat=True):
+                gamemastercode = GameMasterCode.objects.get(code=code)
+
+                if not gamemastercode.used:
+                    user = request.user
+                    plant_of_the_day_permission, _ = sustainability.permissions.plant_of_the_day_permission
+                    if not user.has_perm(plant_of_the_day_permission.codename):
+                        user.user_permissions.add(plant_of_the_day_permission)
+                        gmcode = GameMasterCode.objects.get(code=code)
+                        gmcode.used = True
+                        gmcode.save()
+                        user.save()
+                        return redirect('home')
+            else:
+                messages.error(request, 'Invalid code.')
+    return render(request, 'Sustainability/code_entry.html')

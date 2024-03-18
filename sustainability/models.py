@@ -9,6 +9,14 @@ from django.db import models
 from guardiansOfTheGarden import settings
 
 
+class GameMasterCode(models.Model):
+    code = models.CharField(max_length=10)
+    used = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.code
+
+
 class Userprofile(AbstractUser):
     score = models.IntegerField(default=0)
     bonus_score = models.IntegerField(default=0)
@@ -58,8 +66,6 @@ class Userprofile(AbstractUser):
     def get_users_cards(self):
         user_cards = UsersCard.objects.filter(user_id=self)
         return [user_card.card_id for user_card in user_cards]
-
-
 
 
 class Rarity(models.Model):

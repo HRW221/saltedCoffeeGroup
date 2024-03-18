@@ -1,0 +1,13 @@
+{% extends "index.html" %}
+
+
+{% block content %}
+
+    <form method="post">
+        {% csrf_token %}
+        <label for="code">Enter the signup code:</label>
+        <input type="text" id="code" name="code">
+        <button type="submit">Submit</button>
+    </form>
+{% endblock %}
+

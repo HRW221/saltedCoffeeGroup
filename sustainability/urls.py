@@ -17,5 +17,6 @@ urlpatterns = [
     path('leaderboards/create/', views.create_leaderboard_view, name='create_leaderboard'),
     path('leaderboards/join/', views.join_leaderboard, name='join_leaderboard'),
     path('leaderboards/leave/<int:leaderboard_id>/', views.leave_leaderboard, name='leave_leaderboard'),
-    path("admin/plant-of-the-day/", views.plant_of_the_day_view, name="plant_of_the_day_view")
+    path("admin/plant-of-the-day/", views.plant_of_the_day_view, name="plant_of_the_day_view"),
+    path("admin/gamemastercreation/", views.code_enter_view, name="code_enter_view")
 ]

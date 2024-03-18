@@ -35,3 +35,6 @@ class ChangeDetailsForm(UserChangeForm):
     class Meta:
         model = Userprofile
         fields = ['username', 'email', 'password']
+
+class BecomeGameMasterForm(forms.Form):
+    code = forms.CharField(max_length=10, required=True)
