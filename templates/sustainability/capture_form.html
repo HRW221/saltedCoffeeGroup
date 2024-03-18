@@ -23,7 +23,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('enable_camera').addEventListener('click', function() {
-        navigator.mediaDevices.getUserMedia({ video: {facingMode: 'envrionment'} })
+        navigator.mediaDevices.getUserMedia({ video: {facingMode: 'environment'} })
         .then(function(stream) {
             document.querySelector('.camera').style.display = 'block';
             var video = document.getElementById('video');
