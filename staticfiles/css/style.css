@@ -52,7 +52,6 @@ img {
     display: block;
     max-width: 100%;
     height: auto;
-    box-shadow: var(--box-shadow);
   }
 
 .bg-image {
@@ -244,6 +243,27 @@ a.sidebar-link {
 .how-box:hover .iconbox
 {
     color: var(--c-light);
+}
+
+/*Exeter Info*/
+.carousel-item {
+    height: 100vh;
+    width: 100vh;
+    color: var(--c-light);
+    text-align: center;
+    justify-content: between;
+}
+
+.carousel-item.active .img-fluid {
+    object-fit: cover;
+  }
+
+.carousel-inner {
+    background-color: rgba(var(--c-brand-rgb),0.6);
+}
+
+.guide img:hover {
+    opacity: 0.8;
 }
 
 
