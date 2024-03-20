@@ -338,6 +338,17 @@ a.sidebar-link {
     margin-bottom: 10px;
 }
 
+.plant-net {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 150px;
+}
+
+.plant-net p {
+    font-size: 0.7ch;
+}
+
 /*Leaderboard list*/
 
 #leaderboards {
