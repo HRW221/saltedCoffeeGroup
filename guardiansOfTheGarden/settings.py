@@ -25,6 +25,7 @@ env = environ.Env(
 environ.Env.read_env(os.path.join(BASE_DIR, 'variables.env'))
 
 SECRET_KEY = env('SECRET_KEY')
+FIELD_ENCRYPTION_KEY = env('FIELD_ENCRYPTION_KEY')
 
 CSRF_COOKIE_SECURE = env('PRODUCTION')
 SESSION_COOKIE_SECURE = env('PRODUCTION')
@@ -49,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'encrypted_model_fields',
     'sustainability',
     'registration',
 ]

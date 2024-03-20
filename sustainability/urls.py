@@ -8,6 +8,7 @@ urlpatterns = [
     path("user/cards", views.users_cards_view, name="cards"),
     path("user/account", views.user_account_view, name="account"),
     path("user/change_details/", views.change_details, name="change_details"),
+    path("user/delete_account", views.delete_account, name="delete_account"),
     path("user/identify-plant/upload-plant-image/", views.upload_plant_view, name="upload_plant_image"),
     path("user/identify-plant/capture-plant-image/", views.capture_plant_view, name="capture_plant_image"),
     path("exeter-info", views.exeter_view, name="exeter"),

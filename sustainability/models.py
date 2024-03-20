@@ -6,6 +6,8 @@ from django.contrib.auth.models import User, AbstractUser, Permission
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
+from encrypted_model_fields.fields import EncryptedEmailField
+
 from guardiansOfTheGarden import settings
 
 
@@ -20,6 +22,7 @@ class GameMasterCode(models.Model):
 class Userprofile(AbstractUser):
     score = models.IntegerField(default=0)
     bonus_score = models.IntegerField(default=0)
+    email = EncryptedEmailField()
     groups = models.ManyToManyField(
         'auth.Group',
         related_name='user_profiles',

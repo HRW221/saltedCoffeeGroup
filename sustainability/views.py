@@ -70,6 +70,11 @@ def plant_of_the_day_view(request):
 def account_view(request):
     return render(request, 'sustainability/user.html')
 
+# Part of account view
+@login_required
+def delete_account(request):
+    request.user.delete()
+    return redirect('login')
 
 # Leaderboard view shows leaderboard comparing scores of all players
 @login_required()
@@ -212,6 +217,8 @@ def users_cards_view(request):
         'pack3': pack_list[2],
         'packob4': packs[3],
         'pack4': pack_list[3],
+        'packob5': packs[4],
+        'pack5': pack_list[4],
         'user_owned_cards': user_owned_cards,
         'form': form,
     }
@@ -440,19 +447,20 @@ def leave_leaderboard(request, leaderboard_id):
             'leaderboard')  # Redirect to the home page or any other appropriate URL after leaving the leaderboard
     return None
 
-
 # view to allow users to change their details
 @login_required
 def change_details(request):
     if request.method == 'POST':
-        form = ChangeDetailsForm(request.POST)
+        form = ChangeDetailsForm(request.POST, instance=request.user)
+        
         if form.is_valid():
-            user_profile = Userprofile.objects.get(pk=request.user)
-            user_profile.username = form.cleaned_data['username']
-            user_profile.email = form.cleaned_data['email']
-            user_profile.password = form.cleaned_data['password']
-            user_profile.save()
-            return redirect('account_view')
+            form.save()
+            #user_profile = Userprofile.objects.get(pk=request.user)
+            #user_profile.username = form.cleaned_data['username']
+            #user_profile.email = form.cleaned_data['email']
+            #user_profile.password = form.cleaned_data['password']
+            #user_profile.save()
+            return redirect('account')
     else:
         form = ChangeDetailsForm(instance=request.user)
     return render(request, 'sustainability/change_details.html', {'form': form})

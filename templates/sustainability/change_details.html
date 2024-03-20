@@ -2,13 +2,19 @@
 
 {% extends 'index.html' %}
 
+{% load static%}
+
+{% block title %}
+  change_details
+{% endblock%}
+
 {% block content %}
 <div class="container">
   <h2>Change details</h2>
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Change details</button>
+    <button type="submit" class="btn btn-light">Change details</button>
   </form>
 </div>
 

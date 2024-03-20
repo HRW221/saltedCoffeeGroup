@@ -1,17 +1,20 @@
 {% extends 'index.html' %}
+
+{% load static%}
+
 {% block title %}Join Leaderboard{% endblock %}
 
 {% block content %}
-{% load static %}
 
-<div class="container">
-    <h1>Join a Leaderboard</h1>
-    <form method="post" class="mt-4">
-
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Join Leaderboard</button>
-    </form>
-</div>
+<section id='join' class="min-vh-100 d-flex align-items-center text-center">
+    <div class="container">
+        <h2 class="display-6">Join a Leaderboad</h2>
+        <form method="post" class="mt-4">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-light">Join Leaderboard</button>
+        </form>
+    </div>
+</section>
 
 {% endblock %}
