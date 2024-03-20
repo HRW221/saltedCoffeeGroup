@@ -72,7 +72,6 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
-staticfiles
 # Editor-based Rest Client
 .idea/httpRequests
 
