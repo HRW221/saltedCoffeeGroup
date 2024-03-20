@@ -1,83 +1,90 @@
 {% extends 'index.html' %}
 
+{% load static%}
+
 {% block title %}Capture Plant Image{% endblock %}
 
 {% block content %}
-<div id="camera_interface">
-    <button id="enable_camera">Enable Camera</button>
-    <div class="camera" style="display:none;">
-      <video id="video" width="320" height="240" autoplay></video>
-      <button id="capture">Capture Photo</button>
-      <button id="retake" style="display:none;">Retake</button>
+<section id="camer_interface" class="min-vh-100 d-flex align-items-center text-center">
+    <div class="container">
+        <button id="enable_camera" class="btn btn-light">Enable Camera</button>
+        <div class="camera" style="display:none;">
+            <div class="container">
+                <video id="video" class="video-capture" autoplay></video>
+            </div>
+            <div class="g-4">
+                <button id="capture" class="btn btn-light">Capture Photo</button>
+                <button id="retake" class="btn btn-light">Retake</button>
+            </div>
+        </div>
+        <canvas id="canvas" width="320" height="240" style="display:none;"></canvas>
+        <form method="post" enctype="multipart/form-data" style="display:none;" id="camera_form">
+            {% csrf_token %}
+            <input type="hidden" name="image_data" id="imageData">
+            <input type="hidden" name="latitude" id="latitude">
+            <input type="hidden" name="longitude" id="longitude">
+            <button type="submit" id="submit_button" class="btn btn-light">Submit</button>
+        </form>
     </div>
-    <canvas id="canvas" width="320" height="240" style="display:none;"></canvas>
-    <form method="post" enctype="multipart/form-data" style="display:none;" id="camera_form">
-      {% csrf_token %}
-      <input type="hidden" name="image_data" id="imageData">
-      <button type="submit" id="submit_button" style="display:none;">Submit</button>
-    </form>
-</div>
+</section>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  document.getElementById('enable_camera').addEventListener('click', function() {
-      navigator.mediaDevices.getUserMedia({ video: true })
-      .then(function(stream) {
-          document.querySelector('.camera').style.display = 'block';
-          var video = document.getElementById('video');
-          video.srcObject = stream;
-          video.play();
-          this.style.display = 'none'; 
-      })
-      .catch(function(err) {
-          console.error('Error accessing the camera: ', err);
-      });
-  });
-
-});
-
-  document.getElementById('enable_camera').addEventListener('click', function() {
-      navigator.mediaDevices.getUserMedia({ video: true })
-      .then(function(stream) {
-          document.querySelector('.camera').style.display = 'block';
-          var video = document.getElementById('video');
-          video.srcObject = stream;
-          video.play();
-
-           var enableCameraButton = document.getElementById('enable_camera');
-           if (enableCameraButton) {
+    document.getElementById('enable_camera').addEventListener('click', function() {
+        navigator.mediaDevices.getUserMedia({ video: {facingMode: 'environment'} })
+        .then(function(stream) {
+            document.querySelector('.camera').style.display = 'block';
+            var video = document.getElementById('video');
+            video.srcObject = stream;
+            video.play();
+            var enableCameraButton = document.getElementById('enable_camera');
+            if (enableCameraButton) {
                enableCameraButton.remove();
-           }
-      })
-      .catch(function(err) {
-          console.error('Error accessing the camera: ', err);
-      });
-  });
-  
-  document.getElementById('capture').addEventListener('click', function() {
-    var canvas = document.getElementById('canvas');
-    var video = document.getElementById('video');
-    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+            }
+        })
+        .catch(function(err) {
+            console.error('Error accessing the camera: ', err);
+        });
+    });
 
-    canvas.style.display = 'block';
-    document.getElementById('video').style.display = 'none';
-    this.style.display = 'none';
-    document.getElementById('retake').style.display = 'inline';
+    document.getElementById('capture').addEventListener('click', function() {
+        var canvas = document.getElementById('canvas');
+        var video = document.getElementById('video');
+        canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        canvas.style.display = 'block';
+        document.getElementById('video').style.display = 'none';
+        this.style.display = 'none';
+        document.getElementById('retake').style.display = 'inline';
+
+        var dataURL = canvas.toDataURL('image/jpeg');
+        document.getElementById('imageData').value = dataURL;
     
-    document.getElementById('camera_form').style.display = 'block';
-    document.getElementById('submit_button').style.display = 'inline'; 
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                document.getElementById('latitude').value = position.coords.latitude;
+                document.getElementById('longitude').value = position.coords.longitude;
+                document.getElementById('camera_form').style.display = 'block';
+                document.getElementById('submit_button').style.display = 'inline';
+            }, function(error) {
+                console.error('Error obtaining location: ', error);
+                document.getElementById('camera_form').style.display = 'block';
+                document.getElementById('submit_button').style.display = 'inline';
+            });
+        } else {
+            console.log("Geolocation is not supported by this browser.");
+            document.getElementById('camera_form').style.display = 'block';
+            document.getElementById('submit_button').style.display = 'inline';
+        }
+    });
   
-    var dataURL = canvas.toDataURL('image/jpeg');
-    document.getElementById('imageData').value = dataURL;
-  });
-  
-  
-  document.getElementById('retake').addEventListener('click', function() {
-      document.getElementById('canvas').style.display = 'none'; 
-      document.getElementById('video').style.display = 'block'; 
-      document.getElementById('capture').style.display = 'inline'; 
-      this.style.display = 'none'; 
-      document.getElementById('submit_button').style.display = 'none'; 
-  });
-  </script>
-  {% endblock %}
+    document.getElementById('retake').addEventListener('click', function() {
+        document.getElementById('canvas').style.display = 'none';
+        document.getElementById('video').style.display = 'block';
+        document.getElementById('capture').style.display = 'inline';
+        this.style.display = 'none';
+        document.getElementById('submit_button').style.display = 'none';
+    });
+});
+</script>
+{% endblock %}

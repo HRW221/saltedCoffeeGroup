@@ -1,14 +1,29 @@
 <!--Page to change the current plant of the day-->
 
 {% extends 'index.html' %}
+
+{% block title%}
+    Edit plant of the day
+{% endblock%}
+
 {% block content %}
- <h2>Select Plant of the Day</h2>
- {% if current_plant %}
- <h3>Current Plant of the Day: {{ current_plant }}</h3>
- {% endif %}
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Save</button>
-    </form>
+
+<section id="cards" class="min-vh-100 d-flex align-items-center text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-uppercase fw-semiblold display-1">Select Plant of the Day</h1>
+                {% if current_plant %}
+                <p style="font-size: 2rem;"><strong style="font-weight: 500;">Current Plant of the Day:</strong> {{ current_plant }}</p>
+                {% endif %}
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-light">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+ 
 {% endblock %}

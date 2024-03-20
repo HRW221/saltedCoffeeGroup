@@ -1,17 +1,21 @@
-{% extends 'index.html' %}
-{% block title %}Leaderboard{% endblock %}
+<!-- Create leaderboard view-->
 
-{% block content %}
+{% extends 'index.html' %}
+
 {% load static %}
 
-<div class="container">
-    <h1>Create a Leaderboard</h1>
-    <form method="post" class="mt-4">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Create Leaderboard</button>
+{% block title %}Create Leaderboard{% endblock %}
 
-    </form>
-</div>
+{% block content %}
+
+<section id='create' class="min-vh-100 d-flex align-items-center text-center">
+    <div class="container">
+        <h2 class="display-6">Create a Leaderboard</h2>
+        <form method="post" class="mt-4">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-light">Create Leaderboard</button>
+        </form>
+    </div>
 
 {% endblock %}

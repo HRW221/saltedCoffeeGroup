@@ -1,32 +1,46 @@
- <!-- Leaderboard list view ->
+ <!-- Leaderboard list view -->
 
 {% extends 'index.html' %}
- {% block title %}Leaderboard{% endblock %}
+
+{% load static %}
+
+{% block title %}Leaderboard{% endblock %}
 
 {% block content %}
 
-{% load static %}
-<div class="container">
-       <h1>My Leaderboards</h1>
-    <ul>
-        {% for leaderboard in leaderboard_list %}
-            <li><a href="{% url 'leaderboard_detail' leaderboard.leaderboard_id %}"> {{ leaderboard.leaderboard_name }}</a></li>
-        {% endfor %}
-    </ul>
-      <h1>Public Leaderboards</h1>
-    <ul>
-        {% for leaderboard in public_list %}
-            <li><a href="{% url 'leaderboard_detail' leaderboard.leaderboard_id %}"> {{ leaderboard.leaderboard_name }}</a></li>
-        {% endfor %}
-    </ul>
-<form action="{% url 'create_leaderboard' %}" method="get">
-        <button type="submit">Create Leaderboard</button>
-    </form>
-
-
-    <form action="{% url 'join_leaderboard' %}" method="get">
-        <button type="submit">Join Leaderboard</button>
-    </form>
-</div>
+<section id="leaderboards" class="min-vh-100 d-flex align-items-center text-center">
+    <div class="container">
+        <br>
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-uppercase fw-semiblold display-1">Leaderboards</h1>  
+            </div>
+            <div class="line"></div>  
+        </div>
+        <div class="container">
+            <a href="{% url 'create_leaderboard' %}" class="btn btn-light">Create Leaderboard</a>
+            <a href="{% url 'join_leaderboard' %}" class="btn btn-light">Join Leaderboard</a>
+        </div>
+        <br>
+        <div class="section-title">
+            <h2 class="display-6">My Leaderboards</h2>
+            <div class="line"></div>
+        </div>
+        <ul>
+            {% for leaderboard in leaderboard_list %}
+                <li><a href="{% url 'leaderboard_detail' leaderboard.leaderboard_id %}"> {{ leaderboard.leaderboard_name }}</a></li>
+            {% endfor %}
+        </ul>
+        <div class="section-title">
+            <h2 class="display-6">Public Leaderboards</h2>
+            <div class="line"></div>
+        </div>
+        <ul>
+            {% for leaderboard in public_list %}
+                <li><a href="{% url 'leaderboard_detail' leaderboard.leaderboard_id %}"> {{ leaderboard.leaderboard_name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
 
 {% endblock %}

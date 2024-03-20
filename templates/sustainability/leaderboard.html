@@ -1,44 +1,54 @@
- <!-- Leaderboard view --- Unfinished -->
+ <!-- Leaderboard view -->
 
 {% extends 'index.html' %}
- {% block title %}Leaderboard{% endblock %}
+
+{% load static %}
+
+{% block title %}Leaderboard{% endblock %}
 
 {% block content %}
 
-{% load static %}
-<div class="container">
-       <h2 class="mt-4 mb-3">Leaderboard: {{leaderboard.leaderboard_name}} </h2>
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Rank</th>
-                    <th>Name</th>
-                    <th>Score</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for profile in user_profiles %}
-                <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td>{{ profile.username }}</td>
-                    <td>{{ profile.score }}</td>
-                </tr>
-                {% endfor %}
+<section id="leaderboard" class="min-vh-100 d-flex align-items-center text-center">
+    <div class="container">
+        <br>
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-uppercase fw-semiblold display-1">Leaderboard: {{leaderboard.leaderboard_name}}</h1>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Name</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for profile in user_profiles %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ profile.username }}</td>
+                        <td>{{ profile.score }}</td>
+                    </tr>
+                    {% endfor %}
 
-            </tbody>
-        </table>
-
+                </tbody>
+            </table>
+        </div>
+        <p class="mt-4 mb-3">Leaderboard code: {{leaderboard.leaderboard_code}} </p>
+        <a href="{{ invite_link }}" class="mt-4 mb-3">Invite link: {{invite_link}}  </a>
+        <div class="container">
+            <br>
+            {% if user_in_leaderboard %}
+                <form action="{% url 'leave_leaderboard'  leaderboard.leaderboard_id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Leave Leaderboard</button>
+                </form>
+            {% endif %}
+        </div>
     </div>
-<p class="mt-4 mb-3">Leaderboard code: {{leaderboard.leaderboard_code}} </p>
-<a href="{{ invite_link }}" class="mt-4 mb-3">Invite link: {{invite_link}}  </a>
-{% if user_in_leaderboard %}
-    <form action="{% url 'leave_leaderboard'  leaderboard.leaderboard_id %}" method="post">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Leave Leaderboard</button>
-    </form>
-{% endif %}
-</div>
-
+</section>
 
 {% endblock %}

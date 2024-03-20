@@ -3,11 +3,21 @@
 {% block title %}Upload Plant Image{% endblock %}
 
 {% block content %}
-  <h2>Upload an Image of a Plant</h2>
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-       <!--Plant image form-->
-    {{ form.as_p }}
-    <button type="submit">Upload</button>
-  </form>
+
+<section id="upload" class="min-vh-100 d-flex align-items-center text-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="text-uppercase fw-semiblold display-1">Identify a Plant</h1>
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+             <!--Plant image form-->
+          {{ form.as_p }}
+          <button type="submit" class="btn btn-light">Upload</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
 {% endblock %}

@@ -1,12 +1,22 @@
 {% extends 'index.html' %}
-{% block content %}
-<body>
-  <h2>Sign Up</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Sign Up</button>
-  </form>
-</body>
 
+{% block title %}
+  Signup
+{% endblock %}
+
+{% block content %}
+<section id="signup" class="min-vh-100 d-flex align-items-center text-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h2 class="display-6">Sign Up</h2>
+        <form method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn btn-light">Sign Up</button>
+    </form>
+      </div>
+    </div>
+  </div>
+</section>
 {% endblock %}

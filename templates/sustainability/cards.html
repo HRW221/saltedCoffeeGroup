@@ -3,22 +3,105 @@
 {% extends 'index.html' %}
 
 {% block title %}
-    Card collection
+    Garden
 {% endblock %}
 
 {% block content %}
 
-<div class="container">
-    <a href="identify-plant">Collect Card</a>
-</div>
+<section id="cards" class="min-vh-100 d-flex align-items-center text-center">
+    <div class="container">
+        <br>
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-uppercase fw-semiblold display-1">Your Personal Garden</h1>
+                <div class="container">
+                    <br>
+                    <div class="container">
+                        <a href="{% url 'capture_plant_image' %}" class="btn btn-light">Collect a New Plant</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <h3>{{ packob1.pack_name }}</h>
+        <div class="card-group">
+        {% for card in pack1 %}
+            <!--If the user does not own the card, show a greyed out card-->
+            {% if card not in user_owned_cards %}
+                {% include 'sustainability/plant_card_disabled.html' with card=card %}
+            {% else %}
+                <!--If the user owns the card, show a color version-->
+                {% include 'sustainability/plant_card.html' with card=card %}
+            {% endif %}
+        {% endfor %}
+        </div>
+        <h3>{{ packob2.pack_name }}</h>
+        <div class="card-group">
+        {% for card in pack2 %}
+            <!--If the user does not own the card, show a greyed out card-->
+            {% if card not in user_owned_cards %}
+                {% include 'sustainability/plant_card_disabled.html' with card=card %}
+            {% else %}
+                <!--If the user owns the card, show a color version-->
+                {% include 'sustainability/plant_card.html' with card=card %}
+            {% endif %}
+        {% endfor %}
+        </div>
+        <h3>{{ packob3.pack_name }}</h>
+        <div class="card-group">
+        {% for card in pack3 %}
+            <!--If the user does not own the card, show a greyed out card-->
+            {% if card not in user_owned_cards %}
+                {% include 'sustainability/plant_card_disabled.html' with card=card %}
+            {% else %}
+                <!--If the user owns the card, show a color version-->
+                {% include 'sustainability/plant_card.html' with card=card %}
+            {% endif %}
+        {% endfor %}
+        </div>
+        <h3>{{ packob4.pack_name }}</h>
+        <div class="card-group">
+        {% for card in pack4 %}
+            <!--If the user does not own the card, show a greyed out card-->
+            {% if card not in user_owned_cards %}
+                {% include 'sustainability/plant_card_disabled.html' with card=card %}
+            {% else %}
+                <!--If the user owns the card, show a color version-->
+                {% include 'sustainability/plant_card.html' with card=card %}
+            {% endif %}
+        {% endfor %}
+        </div>
+        <h3>{{ packob5.pack_name }}</h>
+        <div class="card-group">
+        {% for card in pack5 %}
+            <!--If the user does not own the card, show a greyed out card-->
+            {% if card not in user_owned_cards %}
+                {% include 'sustainability/plant_card_disabled.html' with card=card %}
+            {% else %}
+                <!--If the user owns the card, show a color version-->
+                {% include 'sustainability/plant_card.html' with card=card %}
+            {% endif %}
+        {% endfor %}
+        </div>
+    </div>
+</section>
 
-    {% for card in cards %}
-         <!--If the user does not own the card, show a greyed out card-->
-        {% if card not in user_owned_cards %}
-            {% include 'sustainability/plant_card_disabled.html' with card=card %}
-        {% else %}
-             <!--If the user owns the card, show a color version-->
-            {% include 'sustainability/plant_card.html' with card=card %}
-        {% endif %}
-    {% endfor %}
+<section id="upload" class="min-vh-100 d-flex align-items-center text-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h1 class="text-uppercase fw-semiblold display-1">Identify a Plant</h1>
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+               <!--Plant image form-->
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-light">Upload</button>
+          </form>
+        </div>
+      </div>
+    </div>
+</section>
+
+
+
 {% endblock %}

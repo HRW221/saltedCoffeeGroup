@@ -6,12 +6,23 @@ from django.contrib.auth.models import User, AbstractUser, Permission
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
+from encrypted_model_fields.fields import EncryptedEmailField
+
 from guardiansOfTheGarden import settings
+
+
+class GameMasterCode(models.Model):
+    code = models.CharField(max_length=10)
+    used = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.code
 
 
 class Userprofile(AbstractUser):
     score = models.IntegerField(default=0)
     bonus_score = models.IntegerField(default=0)
+    email = EncryptedEmailField()
     groups = models.ManyToManyField(
         'auth.Group',
         related_name='user_profiles',
@@ -58,8 +69,6 @@ class Userprofile(AbstractUser):
     def get_users_cards(self):
         user_cards = UsersCard.objects.filter(user_id=self)
         return [user_card.card_id for user_card in user_cards]
-
-
 
 
 class Rarity(models.Model):

@@ -1,5 +1,18 @@
 /*index.html*/
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+@import url(../css/clash-display.css);
+
+:root{
+    --c-dark: #000000;
+    --c-light: #f0f0f0;
+    --c-brand: #203916;
+    --c-brand-light: #67a74c;
+    --c-brand-rgb: 55, 106, 33;
+    --c-body: #000000;
+    --font-base: 'ClashDisplay', sans-serif;
+    --box-shadow: 0px 15px 25px rgba(0,0,0,0.08);
+    --transition: all 0.5s ease;
+    --background-image: url(../images/back.jpg);
+}
 
 ::after,
 ::before {
@@ -10,23 +23,51 @@
 
 a {
     text-decoration: none;
+    color: var(--c-brand);
+    transition: var(--transition);
+}
+
+a:hover {
+    color: var(--c-brand-light);
 }
 
 li {
     list-style: none;
 }
 
-h1 {
+h1,h2,h3,h4,h5,h6,
+.h1 .h2 .h3 .h4 .h5 .h6 {
     font-weight: 600;
     font-size: 1.5rem;
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
-    background-image: url(../images/background.jpeg);
-    background-color: #cccccc;
-    background-size: cover;
+    font-family: var(--font-base);
+    line-height: 1.7;;
+    color: var(--c-body);
+
 }
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+.bg-image {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-image: var(--background-image);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: -1;
+}
+
 
 .wrapper {
     display: flex;
@@ -36,20 +77,19 @@ body {
     min-height: 100vh;
     width: 100%;
     transition: all 0.35s ease-in-out;
-    background-color: #fafbfe;
 }
 
 #sidebar {
     width: 100px;
-    min-width: 100px;
+    min-width: 70px;
     z-index: 1000;
     transition: all .25s ease-in-out;
-    background-color: #EFFCD7;
     display: flex;
     flex-direction: column;
     height: 100vh;
     position: sticky;
     top: 0px;
+    box-shadow: var(--box-shadow);
 }
 
 #sidebar.expand {
@@ -62,23 +102,23 @@ body {
     cursor: pointer;
     border: 0;
     padding: 1rem 1.5rem;
+    color: var(--c-brand);
 }
 
 .toggle-btn i {
     font-size: 1.5rem;
-    color: #000000;
 }
+
+
 
 .sidebar-logo {
     margin: auto 0;
-    
+
 }
 
 .sidebar-logo a {
-    color: #010101;
     font-size: 1.15rem;
     font-weight: 600;
-
 }
 
 #sidebar:not(.expand) .sidebar-logo,
@@ -93,7 +133,6 @@ body {
 
 a.sidebar-link {
     padding: .625rem 1.625rem;
-    color: #000000;
     display: block;
     font-size: 0.9rem;
     white-space: nowrap;
@@ -105,10 +144,6 @@ a.sidebar-link {
     margin-right: .75rem;
 }
 
-a.sidebar-link:hover {
-    background-color: #C7DF98;
-    border-left: 3px solid #376a21;
-}
 
 .sidebar-item {
     position: relative;
@@ -127,12 +162,120 @@ a.sidebar-link:hover {
     width: 300px;
     height: auto;
     padding: 20px;
-    border: 2px solid #333;
+    border: 1px solid #333;
     border-radius: 10px;
-    background-color: #f0f0f0;
+    background-color: rgba(240, 240, 240, 0.5);
     line-height: 1.5;
     font-family: Arial, sans-serif;
+    margin: 0 auto;
   }
+
+/*home.html*/
+
+/*about*/
+#nature-guides,
+#about {
+    background-color: rgba(var(--c-brand-rgb),0.6);
+    color: var(--c-light);
+}
+
+.section-padding {
+    padding-top: 140px;
+    padding-bottom: 140px;
+    width: 100%;
+}
+
+.section-title {
+    margin-bottom: 40px;
+}
+
+.section-title .line {
+    width: 60px;
+    height: 4px;
+    background-color: var(--c-brand);
+    margin: 16px auto 24px auto;
+}
+
+.section-title p {
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*how to play*/
+
+.theme-shadow {
+    box-shadow: var(--box-shadow);
+}
+
+.iconbox {
+    color: var(--c-brand);
+}
+
+/*how-box*/
+.how-box {
+    position: relative;
+    overflow: hidden;
+    z-index: 2;
+}
+
+.how-box::after
+{
+    content: "";
+    width: 40px;
+    height: 40px;
+    background: rgba(var(--c-brand-rgb),0.2);
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    transition: var(--transition);
+}
+
+.how-box:hover::after {
+    width: 100%;
+    height: 100%;
+    background-color: var(--c-brand-light);
+    z-index: -1;
+}
+
+.how-box:hover h5,
+.how-box:hover p,
+.how-box:hover .iconbox
+{
+    color: var(--c-light);
+}
+
+/*Exeter Info*/
+.guide {
+    overflow: hidden;
+    padding: 50px;
+}
+
+.guide img {
+    transition: var(--transition);
+}
+
+.guide:hover img {
+    transform: scale(1.25);
+}
+
+.guide-content {
+    background-color: var(--c-brand-light);
+    position: relative;
+    bottom: -24px;
+    left: 50%;
+    width: calc(100% - 50px);
+    transform: translateX(-50%);
+    padding: 24px;
+    transition: var(--transition);
+    opacity: 0;
+}
+
+.guide:hover .guide-content {
+    opacity: 1;
+    bottom: 24px;
+    z-index: 1;
+}
 
 
 /*plant_card.html*/
@@ -143,12 +286,11 @@ a.sidebar-link:hover {
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     background-color: #fff;
-    overflow: hidden;
     margin: 10px auto;
 }
 
 .card-header {
-    color: #050505;
+    color: var(--c-body);
     padding: 10px;
     text-align: center;
     font-weight: bold;
@@ -158,12 +300,26 @@ a.sidebar-link:hover {
     padding: 20px;
 }
 
-.attribute {
-    margin-bottom: 10px;
+.card-description {
+    background-color: var(--c-brand-light);
+    color: var(--c-light);
+    position: absolute;
+    bottom: -24px;
+    left: 50%;
+    width: 250px;
+    transform: translateX(-50%);
+    transition: var(--transition);
+    opacity: 0;
+    font-weight: 100;
+    font-size: small;
+    padding: 10px;
 }
 
-.attribute span {
-    font-weight: bold;
+.card:hover .card-description {
+    opacity: 1;
+    z-index: 12;
+    width:100%;
+    bottom: 0;
 }
 
 .plant-photo {
@@ -180,4 +336,17 @@ a.sidebar-link:hover {
     height: 200px;
     object-fit: cover;
     margin-bottom: 10px;
+}
+
+/*Leaderboard list*/
+
+#leaderboards {
+    height: 100vh;
+    width: 100vh;
+    position: absolute;
+}
+
+.video-capture {
+    width: 100%;
+    aspect-ratio: 560/480;
 }

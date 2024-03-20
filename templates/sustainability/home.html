@@ -1,15 +1,125 @@
  <!--Homepage-->
-
 {% extends 'index.html' %}
+{% load static %}
+
 {% block title %}Home{% endblock %}
 
 {% block content %}
 
-{% load static %}
-<div class="container">
-    <h3>Current Plant of the Day: {{ current_plant.name }}</h3>
-    <!--Show the card that corresponds with the current plant of the day-->
-   {% include 'sustainability/plant_card.html' with card=current_plant %}
-</div>
+<section id="hero" class="min-vh-100 d-flex align-items-center text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-uppercase fw-semibold display-1">Welcome to Guardians of the Garden</h1>
+                <h5 class="mt-3 mb-4">We are a student led web app designed to encourage sustainability and biodiversity at Exeter.</h5>
+                <div>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'cards' %}" class="btn btn-light">Get Gardening</a>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="btn btn-light">Get Gardening</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="about" class="section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="section-title">
+                    <h1 class="display-4 fw-semibold">About us</h1>
+                    <div class="line"></div>
+                    <p>Welcome to Guardians of the Garden, the ultimate game for exploring the lush biodiversity thriving on your campus!</p>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-between align-items-center">
+            <div class="col-lg-6">
+                <img src="{% static 'images/Taddiforde_Ponds_November_2011.jpg' %}" alt="Taddiforde_Ponds" class="pond-img">
+            </div>
+            <div class="col-lg-5">
+                <p>Delve into the enchanting world of flora as you embark on an exciting journey to discover, collect, and learn about the diverse plant species scattered across our campus. Collect varieties of exotic and native plants across campus and compete with friends to find the most plants for your garden. Join university and society led leaderboards to follow how friends and classmates are doing.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="how-to">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="section-title">
+                    <h1 class="display-4 fw-semibold">How to use Guardians of the Garden</h1>
+                    <div class="line"></div>
+                    <p>Collect unique cards to earn points, with rarer finds offering greater rewards, and complete packs to unlock even more points. Let the adventure begin!</p>
+                </div>
+            </div>
+        </div>
+        <div class="row g-4 text-center">
+            <div class="col-lg-4 col-sm-6 mb-2">
+                <div class="how-box theme-shadow p-lg-5 p-4">
+                    <h5 class="mt-1 mb-1">Collect</h5>
+                    <p>Take photos of plants around campus to identify them. Collect plants from our campus plant packs to add them to your garden.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 mb-2">
+                <div class="how-box theme-shadow p-lg-5 p-4">
+                    <h5 class="mt-1 mb-1">Earn Points</h5>
+                    <p>Collect points each time you find one of our plants and gain extra points if you complete a pack or find the plant of the day!</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 mb-2">
+                <div class="how-box theme-shadow p-lg-5 p-4">
+                    <h5 class="mt-1 mb-1">Packs</h5>
+                    <p>Discover themed packs based on different places around campus.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 mb-2">
+                <div class="how-box theme-shadow p-lg-5 p-4">
+                    <h5 class="mt-1 mb-1">Learn</h5>
+                    <p>Access information about each plant in your collection to deepen your knowledge of biodiversity and nature.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 mb-2">
+                <div class="how-box theme-shadow p-lg-5 p-4">
+                    <h5 class="mt-1 mb-1">Compete</h5>
+                    <p>Compete with friends or other players on leaderboards to see who has the most extensive collection and highest score.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6 mb-2">
+                <div class="how-box theme-shadow p-lg-5 p-4">
+                    <h5 class="mt-1 mb-1">Share</h5>
+                    <p>Share your discoveries and achievements with others and collaborate to find and learn about nature at the University of Exeter.</p>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+<section id="plant-of-the-day" class="min-vh-100 d-flex align-items-center text-center">
+    <div class="container">
+        <h2>Current Plant of the Day: {{ current_plant.name }}</h2>
+        <!--Show the card that corresponds with the current plant of the day-->
+       {% include 'sustainability/plant_card.html' with card=current_plant %}
+    </div>
+</section>
+
+<section id="exeter-info" class="min-vh-100 d-flex align-items-center text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-uppercase fw-semiblold display-1">Biodiversity at the University of Exeter </h1>
+                <div class="container">
+                    <div class="container">
+                        <a href="{% url 'exeter' %}" class="btn btn-light">Where to find nature on campus</a>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 {% endblock %}
