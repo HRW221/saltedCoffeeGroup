@@ -302,13 +302,13 @@ def user_account_view(request):
     return render(request, 'sustainability/account.html', context={'user': user, 'has_permission': has_permission,})
 
 
-#@login_required
+@login_required
 def identify_plant_view(request):
     has_permission = request.user.has_perm('sustainability.add_plant_of_the_day')
     return render(request, 'sustainability/cards.html', {'has_permission': has_permission,})
 
 
-#@login_required
+@login_required
 def upload_plant_view(request):
     # Initialize variables to ensure they are accessible throughout the function
     plant_of_the_day_card = None
@@ -369,7 +369,7 @@ def upload_plant_view(request):
     return render(request, 'sustainability/cards.html', {'form': form, 'has_permission': has_permission,})
 
 
-#@login_required
+@login_required
 def capture_plant_view(request):
     # Initialize variables to ensure they are accessible throughout the function
     plant_of_the_day_card = None
