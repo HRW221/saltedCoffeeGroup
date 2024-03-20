@@ -43,10 +43,6 @@ class Userprofile(AbstractUser):
         self.bonus_score += 3
         self.save()
 
-    def pack_bonus(self):
-        self.bonus_score += 5
-        self.save()
-
     def __str__(self):
         return self.username
 
@@ -58,17 +54,23 @@ class Userprofile(AbstractUser):
         self.score += self.bonus_score
         self.save()
         return self.score
-
-    def user_owns_all_cards_in_pack(self, card):
-        print(card)
-        pack_cards = set(card.get_cards_in_pack())
-        user_cards = set(self.get_users_cards())
-        print(pack_cards, user_cards)
-        return pack_cards.issubset(user_cards)
+    
+   
 
     def get_users_cards(self):
         user_cards = UsersCard.objects.filter(user_id=self)
         return [user_card.card_id for user_card in user_cards]
+    
+    def all_cards_in_pack_bonus(self, card_id1):
+        card = Card.objects.get(card_id=card_id1)
+        pack_cards = set(card.get_cards_in_pack())
+
+        user_cards = UsersCard.objects.filter(user_id = self.id)
+        user_pack_cards = set(pack_cards.intersection(user_cards))
+
+        if len(user_pack_cards) == 5:
+            self.bonus_score += 5
+            self.save()
 
 
 class Rarity(models.Model):
@@ -87,6 +89,10 @@ class Pack(models.Model):
 
     def __str__(self):
         return self.pack_name
+    
+    @classmethod
+    def get_pack_id(self):
+        return self.pack_id
 
 
 class Card(models.Model):
@@ -103,9 +109,9 @@ class Card(models.Model):
             if any(common_name.lower() in card.name.lower() for common_name in common_names):
                 return card
         return None
-
-    def get_cards_in_pack(self):
-        cards = Card.objects.filter(pack_id=self.pack_id)
+    @classmethod
+    def get_cards_in_pack(cls):
+        cards = Card.objects.filter(pack_id=Card.objects.first().pack_id.pack_id)
         return cards
 
     def __str__(self):
