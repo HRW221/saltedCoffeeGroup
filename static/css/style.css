@@ -347,7 +347,6 @@ a.sidebar-link {
 }
 
 .video-capture {
-    height: 560px;
-    width: 480px;
-    margin: 20px;
+    width: 100%;
+    aspect-ratio: 560/480;
 }

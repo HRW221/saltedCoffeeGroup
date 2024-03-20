@@ -330,42 +330,10 @@ def upload_plant_view(request):
                 results = data.get('results', [])
                 first_result = results[0] if results else None
 
-                try:
-                    today = timezone.now().date()  # Gets today's date
-                    # Retrieves the PlantOfTheDay object for today
-                    plant_of_the_day_card = PlantOfTheDay.objects.get(date=today).plant
-                    # Gets the name of the plant of the day, converting it to lowercase for comparison
-                    plant_of_the_day_name = plant_of_the_day_card.name.lower()
-
-                    # Checks if the plant of the day's name is contained within any of the common names returned by the API
-                    common_names = first_result.get('species', {}).get('commonNames', []) if first_result else []
-                    is_match = any(plant_of_the_day_name in common_name.lower() for common_name in common_names)
-                    matching_card = Card.get_card_by_common_name(common_names)
-                    created = False
-                    # Assigns the matched card to the user, creating a new UsersCard object if necessary
-                    if matching_card is not None:
-                        user_card, created = UsersCard.objects.get_or_create(
-                            user_id=request.user,
-                            card_id=matching_card
-                        )
-
-                    user_profile = Userprofile.objects.get(id=request.user.id)
-                    # Constructs the match message based on whether a match was found
-                    if is_match:
-                        if created:
-                            if user_profile.user_owns_all_cards_in_pack(user_card.card_id):
-                                user_profile.pack_bonus()
-                            user_profile.potd_bonus()
-                            match_message = "Congratulations! Your plant is related to the Plant of the Day! This card has been added to your collection!"
-                        else:
-                            match_message = "Congratulations! Your plant is related to the Plant of the Day! However, you already have this card in your collection."
-                    else:
-                        if created:
-                            if user_profile.user_owns_all_cards_in_pack(user_card.card_id):
-                                user_profile.pack_bonus()
-                        match_message = "Your plant is not the Plant of the Day."
-                except PlantOfTheDay.DoesNotExist:
-                    match_message = "No Plant of the Day set for today."
+                today = timezone.now().date()  # Gets today's date
+                # Retrieves the PlantOfTheDay object for today
+                plant_of_the_day_card = PlantOfTheDay.objects.get(date=today).plant
+                match_message = None
 
                 # Renders the result template with the collected information
                 return render(request, 'sustainability/plant_identification_results.html', {
