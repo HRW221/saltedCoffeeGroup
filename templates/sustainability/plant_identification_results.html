@@ -1,10 +1,8 @@
 
-<!--Show the results from the API request, including plant common names and certainty score-->
-
 {% extends 'index.html' %}
 
 {% block title %}
-  Plant identifcation API results
+  Plant identification API results
 {% endblock %}
 
 {% block content %}
@@ -38,10 +36,16 @@
                 {% include 'sustainability/plant_card.html' with card=current_plant %}
               </div>
             {% endif %}
+
+            <!-- Try Again Button -->
+            <div style="margin-top: 20px;">
+              <button onclick="window.location.href='/sustainability/user/identify-plant/capture-plant-image/'" class="btn btn-light">Try Again</button>
+            </div>
           </div>
         </div>
       </div>
     </div>  
   </div>
 </section>
+
 {% endblock %}

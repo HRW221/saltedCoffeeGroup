@@ -7,23 +7,23 @@
 {% block content %}
 <section id="camer_interface" class="min-vh-100 d-flex align-items-center text-center">
     <div class="container">
-        <button id="enable_camera" class="btn btn-light btn-spaced">Enable Camera</button>
+        <button id="enable_camera" class="btn btn-light">Enable Camera</button>
         <div class="camera" style="display:none;">
             <div class="container">
                 <video id="video" class="video-capture" autoplay></video>
             </div>
             <div class="g-4">
-                <button id="capture" class="btn btn-light btn-spaced">Capture Photo</button>
-                <button id="retake" class="btn btn-light btn-spaced">Retake</button>
+                <button id="capture" class="btn btn-light">Capture Photo</button>
+                <button id="retake" class="btn btn-light">Retake</button>
             </div>
         </div>
-        <canvas id="canvas" width="320" height="240" style="display:none;" class="btn-spaced"></canvas>
+        <canvas id="canvas" width="320" height="240" style="display:none;"></canvas>
         <form method="post" enctype="multipart/form-data" style="display:none;" id="camera_form">
             {% csrf_token %}
             <input type="hidden" name="image_data" id="imageData">
             <input type="hidden" name="latitude" id="latitude">
             <input type="hidden" name="longitude" id="longitude">
-            <button type="submit" id="submit_button" class="btn btn-light btn-spaced">Submit</button>
+            <button type="submit" id="submit_button" class="btn btn-light">Submit</button>
         </form>
     </div>
 </section>
