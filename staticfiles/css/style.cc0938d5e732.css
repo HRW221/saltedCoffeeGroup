@@ -277,6 +277,7 @@ a.sidebar-link {
     z-index: 1;
 }
 
+
 /*plant_card.html*/
 .card{
     width: 300px;
@@ -285,7 +286,6 @@ a.sidebar-link {
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     background-color: #fff;
-    overflow: hidden;
     margin: 10px auto;
 }
 
@@ -300,12 +300,26 @@ a.sidebar-link {
     padding: 20px;
 }
 
-.attribute {
-    margin-bottom: 10px;
+.card-description {
+    background-color: var(--c-brand-light);
+    color: var(--c-light);
+    position: absolute;
+    bottom: -24px;
+    left: 50%;
+    width: 250px;
+    transform: translateX(-50%);
+    transition: var(--transition);
+    opacity: 0;
+    font-weight: 100;
+    font-size: small;
+    padding: 10px;
 }
 
-.attribute span {
-    font-weight: bold;
+.card:hover .card-description {
+    opacity: 1;
+    z-index: 12;
+    width:100%;
+    bottom: 0;
 }
 
 .plant-photo {

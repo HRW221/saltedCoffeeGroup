@@ -30,9 +30,9 @@ FIELD_ENCRYPTION_KEY = env('FIELD_ENCRYPTION_KEY')
 CSRF_COOKIE_SECURE = env('PRODUCTION')
 SESSION_COOKIE_SECURE = env('PRODUCTION')
 CSRF_TRUSTED_ORIGINS = [
-    'https://localhost:8000',
-    'https://*.railway.app/',
-    'monorail.proxy.rlwy.net',
+    'https://localhost:*',
+    'https://*.railway.app',
+    'https://monorail.proxy.rlwy.net',
 ]
 
 # SECURITY WARNING: don't run with debug turned on in production!
