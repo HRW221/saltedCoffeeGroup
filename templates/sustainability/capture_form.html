@@ -25,19 +25,25 @@
             <input type="hidden" name="longitude" id="longitude">
             <button type="submit" id="submit_button" class="btn btn-light">Submit</button>
         </form>
+
+        <div class="plant-net">
+            <img src="{% static 'images/powered-by-plantnet-light.png' %}" alt="plantnet">
+            <p>this page sends data to a third party site for processing</p>
+          </div>
     </div>
 </section>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('enable_camera').addEventListener('click', function() {
+        // 'facingMode: 'environment'' ensures the camera defaults to the back camera
         navigator.mediaDevices.getUserMedia({ video: {facingMode: 'environment'} })
         .then(function(stream) {
             document.querySelector('.camera').style.display = 'block';
-            var video = document.getElementById('video');
+            let video = document.getElementById('video');
             video.srcObject = stream;
             video.play();
-            var enableCameraButton = document.getElementById('enable_camera');
+            let enableCameraButton = document.getElementById('enable_camera');
             if (enableCameraButton) {
                enableCameraButton.remove();
             }
@@ -48,25 +54,32 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.getElementById('capture').addEventListener('click', function() {
-        var canvas = document.getElementById('canvas');
-        var video = document.getElementById('video');
+        // Draw current frame of live camera video to a canvas
+        // This saves the frame, so it can be sent to the server
+        let canvas = document.getElementById('canvas');
+        let video = document.getElementById('video');
         canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
 
+        // Hides the video, as it is not required after a photo has been taken
         canvas.style.display = 'block';
         document.getElementById('video').style.display = 'none';
         this.style.display = 'none';
         document.getElementById('retake').style.display = 'inline';
 
-        var dataURL = canvas.toDataURL('image/jpeg');
+        // Get image data from canvas in base64
+        let dataURL = canvas.toDataURL('image/jpeg');
         document.getElementById('imageData').value = dataURL;
     
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition(function(position) {
+                // Adds location values to form, so they can be submitted with the photo
                 document.getElementById('latitude').value = position.coords.latitude;
                 document.getElementById('longitude').value = position.coords.longitude;
+                // Show submit button to activate it
                 document.getElementById('camera_form').style.display = 'block';
                 document.getElementById('submit_button').style.display = 'inline';
             }, function(error) {
+                // Show submit button to activate it
                 console.error('Error obtaining location: ', error);
                 document.getElementById('camera_form').style.display = 'block';
                 document.getElementById('submit_button').style.display = 'inline';
@@ -79,9 +92,11 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   
     document.getElementById('retake').addEventListener('click', function() {
+        // Shows video element so the user can see their camera output
         document.getElementById('canvas').style.display = 'none';
         document.getElementById('video').style.display = 'block';
         document.getElementById('capture').style.display = 'inline';
+        // Disable submit button
         this.style.display = 'none';
         document.getElementById('submit_button').style.display = 'none';
     });

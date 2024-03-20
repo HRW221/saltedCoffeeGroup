@@ -7,18 +7,17 @@ admin.site.register(Rarity)
 admin.site.register(Pack)
 admin.site.register(Card)
 
+
 class potdAdmin(admin.ModelAdmin):
     readonly_fields = ("date",)
+
+
 class leaderboardAdmin(admin.ModelAdmin):
     readonly_fields = ("leaderboard_code",)
+
 
 admin.site.register(PlantOfTheDay, potdAdmin)
 admin.site.register(UsersCard)
 admin.site.register(Leaderboard, leaderboardAdmin)
 admin.site.register(LeaderboardMember)
 admin.site.register(GameMasterCode)
-
-
-
-
-# Register your models here.

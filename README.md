@@ -1,5 +1,5 @@
 # Guardians of the Garden
-
+https://django-server-production-1cc2.up.railway.app/
 ### Group Saltedcoffee
 ___
 
@@ -35,5 +35,8 @@ The project should run in debug mode by default. To change this, navigate to the
 Replace the line ```DEBUG=True``` with ```DEBUG=False```.
 
 ### Deploying
-We used Railway to deploy this project. To deploy using Railway, create a free account using your Github account. Then Create a new project on Railway using the **Django template**. This will create two services, a Django service, and a PostgreSQL service. Open the Django project's settings and change the **Source Repo** setting to point to your Github clone. Change the **Custom Start Command** option to ```gunicorn guardiansOfTheGarden.wsgi```. In the **Variables** tab, add a variable called DATABASE_URL and copy the PostgreSQL URL into this field. Finally, in your project's **variables.env** file, replace the DATABASE_URL field with the URL to the PostgreSQL URL and run ```python manage.py migrate```.
+We used Railway to deploy this project. To deploy using Railway, create a free account using your GitHub account. Then Create a new project on Railway using the **Django template**. This will create two services, a Django service, and a PostgreSQL service. Open the Django project's settings and change the **Source Repo** setting to point to your GitHub clone. Change the **Custom Start Command** option to ```gunicorn guardiansOfTheGarden.wsgi```. In the **Variables** tab, add a variable called DATABASE_URL and copy the PostgreSQL URL into this field. Finally, in your project's **variables.env** file, replace the DATABASE_URL field with the URL to the PostgreSQL URL and run ```python manage.py migrate```.
 
+## Configuration
+You can modify the app's behavior using the ```variables.env``` file.
+For example, you can edit the location of the uni campus to change which institution's campus the app uses.

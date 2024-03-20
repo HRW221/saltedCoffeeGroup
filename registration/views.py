@@ -31,6 +31,7 @@ def signup_view(request):
         form = SignUpForm()
     return render(request, 'registration/signup.html', {'form': form})
 
+
 @login_required()
 def logout_view(request):
     logout(request)
