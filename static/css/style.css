@@ -38,7 +38,7 @@ li {
 h1,h2,h3,h4,h5,h6,
 .h1 .h2 .h3 .h4 .h5 .h6 {
     font-weight: 600;
-    font-size: 3.5vw;
+    font-size: 1.5rem;
 }
 
 body {
@@ -80,21 +80,21 @@ img {
 }
 
 #sidebar {
-    width: 5em;
-    min-width: 5em;
+    width: 100px;
+    min-width: 70px;
     z-index: 1000;
     transition: all .25s ease-in-out;
     display: flex;
     flex-direction: column;
     height: 100vh;
     position: sticky;
-    top: 0;
+    top: 0px;
     box-shadow: var(--box-shadow);
 }
 
 #sidebar.expand {
-    width: 15em;
-    min-width: 15em;
+    width: 260px;
+    min-width: 260px;
 }
 
 .toggle-btn {
@@ -177,12 +177,6 @@ a.sidebar-link {
 #about {
     background-color: rgba(var(--c-brand-rgb),0.6);
     color: var(--c-light);
-}
-
-section {
-    width: 80vw;
-    margin-left: auto;
-    margin-right: 0;
 }
 
 .section-padding {
