@@ -441,8 +441,9 @@ def capture_plant_view(request):
                                 user_id=request.user,
                                 card_id=plant_of_the_day_card
                             )
+                            request.user.potd_bonus()
                             if created:
-                                match_message = f"Congratulations! Your plant is related to the Plant of the Day ({plant_of_the_day_card.name}) and was taken in a valid location! A new card has been added to your collection."
+                                match_message = f"Congratulations! Your plant is related to the Plant of the Day ({plant_of_the_day_card.name}) and was taken in a valid location! A new card has been added to your collection. You have collected 3 bonus points :)"
                             else:
                                 match_message = f"Congratulations! Your plant matches the Plant of the Day ({plant_of_the_day_card.name}) and was taken in a valid location, but you already have this card in your collection."
                         elif latitude is None or longitude is None:
