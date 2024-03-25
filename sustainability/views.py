@@ -467,8 +467,28 @@ def capture_plant_view(request):
                         match_message = "The location of the plant is invalid, unable to collect card."
 
                 except PlantOfTheDay.DoesNotExist:
-                    match_message = "There is no Plant of the Day set for today."
-
+                    if latitude is not None and longitude is not None and is_within_area(latitude, longitude):
+                        # Identify the card from API response's common names
+                            identified_card = Card.get_card_by_common_name(common_names)
+                            if identified_card:
+                                # If the identified card exists and belongs to a pack, add it to the user's collection
+                                user_card, created = UsersCard.objects.get_or_create(
+                                user_id=request.user,
+                                card_id=identified_card
+                                )
+                                user = request.user
+                                user.all_cards_in_pack_bonus(identified_card.card.id)
+                                if created:
+                                    match_message = "A new card has been added to your garden, there is no plant of the day."
+                                else:
+                                    match_message = "The plant you identified is already in your garden."
+                            else:
+                                # Handles the case where no matching card was found or it doesn't belong to any pack
+                                match_message = "No matching card in the packs."
+                    elif latitude is None or longitude is None:
+                            match_message = "No location provided, unable to verify if the plant was taken in a valid location."
+                    else:
+                            match_message = "The location of the plant is invalid, unable to collect card."
                 # Renders the result template with the collected information
                 return render(request, 'sustainability/plant_identification_results.html', {
                     'best_match': best_match,
