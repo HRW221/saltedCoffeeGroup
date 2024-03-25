@@ -451,7 +451,7 @@ def capture_plant_view(request):
                                     card_id=identified_card
                                 )
                                 user = request.user
-                                user.all_cards_in_pack_bonus(identified_card.card.id)
+                                user.all_cards_in_pack_bonus(identified_card.card_id)
                                 if created:
                                     match_message = ("The plant you identified doesnt match the Plant of the Day. "
                                                      "A new card has been added to your garden")
@@ -469,6 +469,7 @@ def capture_plant_view(request):
                 except PlantOfTheDay.DoesNotExist:
                     if latitude is not None and longitude is not None and is_within_area(latitude, longitude):
                         # Identify the card from API response's common names
+                            common_names = first_result.get('species', {}).get('commonNames', []) if first_result else []
                             identified_card = Card.get_card_by_common_name(common_names)
                             if identified_card:
                                 # If the identified card exists and belongs to a pack, add it to the user's collection
@@ -477,7 +478,7 @@ def capture_plant_view(request):
                                 card_id=identified_card
                                 )
                                 user = request.user
-                                user.all_cards_in_pack_bonus(identified_card.card.id)
+                                user.all_cards_in_pack_bonus(identified_card.card_id)
                                 if created:
                                     match_message = "A new card has been added to your garden, there is no plant of the day."
                                 else:
